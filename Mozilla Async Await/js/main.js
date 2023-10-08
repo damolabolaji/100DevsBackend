@@ -118,20 +118,26 @@ getPromise2
     console.log(data[0].name);
   });
 
-  // We need to check that the server accepted and was able to handle
-  // the request, before we try to read it
-  
-  const getPromise3 = fetch(
-    "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
-  );
+// We need to check that the server accepted and was able to handle
+// the request, before we try to read it
 
-  getPromise3
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data[0].name);
-    });
+const getPromise3 = fetch(
+  "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
+);
+
+getPromise3
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data[0].name);
+  })
+  .catch((error) => console.error(`could not get error: ${error}`));
+
+//To support error handling, Promise objects provide a catch() method.
+//This is a lot like then(): you call it and pass in a handler function.
+//However, while the handler passed to then() is called when the asynchronous
+//operation succeeds, the handler passed to catch () is called when the asynchronous operation fails.
