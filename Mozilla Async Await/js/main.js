@@ -78,7 +78,7 @@ const fetchPromise = fetch(
   "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
 );
 
-console.log(fetchPromise);
+console.log(fetchPromise); //because the promise is still trying to resolve, it returns promise{status:'pemding'}
 
 // passing a handler function into the Promise's then() method.
 // When(and if) the fetch operation succeeds, the promise will call our handler,
@@ -165,7 +165,6 @@ Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
 //in this way, its all or nthing. That is, the promise.all throws an error if one of the promises is rejected
 //this does not include a 404 status response
 
-
 //PROMISE.ANY()
 // Sometimes, you might need any one of a set of promises to be fulfilled, and don
 // 't care which one. In that case, you want Promise.any(). This is like Promise.all(),
@@ -189,3 +188,27 @@ Promise.any([fetchPromise1, fetchPromise2, fetchPromise3])
   .catch((error) => {
     console.error(`Failed to fetch: ${error}`);
   });
+
+//ASYNC AND AWAIT
+async function fetchProducts() {
+  try {
+    // after this line, our function will wait for the `fetch()` call to be settled
+    // the `fetch()` call will either return a Response or throw an error
+    const response = await fetch(
+      "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    // after this line, our function will wait for the `response.json()` call to be settled
+    // the `response.json()` call will either return the parsed JSON object or throw an error
+    const data = await response.json();
+    console.log(data[0].name);
+  } catch (error) {
+    console.error(`Could not get products: ${error}`);
+  }
+}
+
+
+const promise = fetchProducts();
+promise.then((data) => console.log(data[0].name));
