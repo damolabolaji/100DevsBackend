@@ -100,5 +100,22 @@ console.log(getPromise);
 // It turns out that json() is also asynchronous.So this is a case where we have to call two successive asynchronous functions.
 getPromise.then((response) => {
   const jsonObject = response.json();
-  jsonObject.then((data) => console.log(data[0].name));
+  jsonObject.then((data) => {
+    console.log(data[0].name); //will log 'baked beans'
+  });
 });
+
+// But the elegant feature of promises is that then() itself returns a promise,
+//   which will be completed with the result of the function passed to it.
+//   This means that we can(and certainly should) rewrite the above code like this:
+const getPromise2 = fetch(
+  "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
+);
+
+getPromise2
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data[0].name);
+  });
+
+ 
