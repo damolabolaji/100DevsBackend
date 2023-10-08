@@ -73,23 +73,32 @@
   },
 ];
 
+//USING fETCH API()
 const fetchPromise = fetch(
   "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
 );
 
 console.log(fetchPromise);
 
+// passing a handler function into the Promise's then() method.
+// When(and if) the fetch operation succeeds, the promise will call our handler,
+//   passing in a Response object, which contains the server's response.
 fetchPromise.then((response) => {
   console.log(`Received response: ${response.status}`);
 });
 
 console.log("Started request…");
 
+//CHAINING PROMISES
 const getPromise = fetch(
   "https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
 );
 console.log(getPromise);
-getPromise.then((response) =>
-  console.log(`Received response: ${response.status}`)
-);
-console.log(`Started Request...`);
+
+// With the fetch() API, once you get a Response object, you need to call another function to get the response data.
+// In this case, we want to get the response data as JSON, so we would call the json() method of the Response object.
+// It turns out that json() is also asynchronous.So this is a case where we have to call two successive asynchronous functions.
+getPromise.then((response) => {
+  const jsonObject = response.json();
+  jsonObject.then((data) => console.log(data[0].name));
+});
