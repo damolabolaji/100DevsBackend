@@ -14,5 +14,14 @@ fs.writeFile(
   (err) => {
     if (err) throw err;
     console.log("file written into...");
+    //create and write file
+    fs.appendFile(
+      path.join(__dirname, "/test", "hello.txt"),
+      "Hello World",
+      (err) => {
+        if (err) throw err;
+        console.log("file written into...");
+      }
+    );
   }
 );
