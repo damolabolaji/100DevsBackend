@@ -38,11 +38,28 @@ const path = require("path");
 
 //renamefile
 
-fs.rename(
-  path.join(__dirname, "/test", "hello.txt"),
-  path.join(__dirname, "/test", "hellotoyou.txt"),
-  function (err) {
+// fs.rename(
+//   path.join(__dirname, "/test", "hello.txt"),
+//   path.join(__dirname, "/test", "hellotoyou.txt"),
+//   function (err) {
+//     if (err) throw err;
+//     console.log("rename file...");
+//   }
+// );
+
+// create folder
+fs.mkdir(path.join(__dirname, "/mytest"), {}, function (err) {
+  if (err) throw err;
+  console.log("folder created");
+});
+
+fs.writeFile(
+  path.join(__dirname, "/mytest", "uuids.txt"),
+  "All UUIDs",
+  (err) => {
     if (err) throw err;
-    console.log("rename file...");
+    console.log("file written into...");
   }
 );
+
+
