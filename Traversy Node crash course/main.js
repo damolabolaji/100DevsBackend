@@ -18,7 +18,10 @@ const path = require("path");
 const http = require("http");
 
 const server = http.createServer((req, res) => {
-  console.log(req.url);
+  //   console.log(req.url);
+  if (req.url === "/") {
+    res.end("<h1>This is home</h1>");
+  }
 });
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`server running on ${PORT}`));
