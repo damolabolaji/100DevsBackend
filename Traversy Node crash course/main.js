@@ -20,7 +20,14 @@ const http = require("http");
 const server = http.createServer((req, res) => {
   //   console.log(req.url);
   if (req.url === "/") {
-    res.end("<h1>This is homepage changed</h1>");
+    fs.readFile(
+      path.join(__dirname, "public", "index.html"),
+      (err, content) => {
+        if (err) throw err;
+        res.writeHead(200, { "Content-type": "text/html" });
+        res.end(content);
+      }
+    );
   }
 });
 const PORT = process.env.PORT || 5000;
